@@ -182,57 +182,6 @@ func (h *handlerFund) DeleteFund(w http.ResponseWriter, r *http.Request) {
 	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponseFund(data)}
 	json.NewEncoder(w).Encode(response)
 }
-
-// func (h *handlerFund) GetFundStatus(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
-
-// 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
-
-// 	var Fund models.Fund
-// 	Fund, err := h.FundRepository.GetFund(id)
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
-// 		json.NewEncoder(w).Encode(response)
-// 	}
-
-// 	type FundItem struct {
-// 		ID           int
-// 		DonateAmount string
-// 		Status       string
-// 		CreatedAt    string
-// 		Fund         string
-// 	}
-
-// 	var funds []FundItem
-
-// 	for fund_pending, _ := range Fund.Transaction {
-// 		fund_status, _ := h.FundRepository.GetFundStatus(Fund.Transaction[fund_pending].ID)
-// 		fund_done := FundItem{
-// 			ID:           fund_status.ID,
-// 			DonateAmount: fund_status.DonateAmount,
-// 			Status:       fund_status.Status,
-// 		}
-// 		if fund_status.Status == "pending" {
-// 			funds = append(funds, fund_done)
-// 		}
-// 	}
-
-// 	type FundItemNumber struct {
-// 		Total int
-// 	}
-
-// 	fundsNumber := FundItemNumber{
-// 		Total: len(funds),
-// 	}
-
-// 	Fund.Thumbnail = os.Getenv("PATH_ILE") + Fund.Thumbnail
-
-// 	w.WriteHeader(http.StatusOK)
-// 	response := dto.SuccessResult{Code: http.StatusOK, Data: fundsNumber}
-// 	json.NewEncoder(w).Encode(response)
-// }
-
 func convertResponseFund(u models.Fund) Fundsdto.FundResponse {
 	return Fundsdto.FundResponse{
 		ID:          u.ID,

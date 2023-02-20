@@ -50,10 +50,3 @@ func (r *repository) DeleteFund(fund models.Fund) (models.Fund, error) {
 
 	return fund, err
 }
-
-// func (r *repository) GetFundStatus(ID int) (models.Transaction, error) {
-// 	var trans models.Transaction
-// 	err := r.db.Find(&trans, "id =?", ID).Error
-
-// 	return trans, err
-// }

@@ -53,11 +53,6 @@ func (h *handlerTransaction) FindTransaction(w http.ResponseWriter, r *http.Requ
 		imagePath := os.Getenv("PATH_FILE") + t.Fund.Thumbnail
 		responseTransaction[i].Fund.Thumbnail = imagePath
 	}
-
-	// for i, p := range Transactions {
-	// 	Transactions[i].ProofAttachment = path_file + p.ProofAttachment
-	// }
-
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: responseTransaction}
 	json.NewEncoder(w).Encode(response)
@@ -103,15 +98,6 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
 		json.NewEncoder(w).Encode(response)
 	}
-
-	// transaction, err := h.TransactionRepository.GetTransaction(transaction.ID)
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	response := dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()}
-	// 	json.NewEncoder(w).Encode(response)
-	// 	return
-	// }
-
 	// Create unique transaction id
 	var TransIdIsMatch = false
 	var TransactionId int
@@ -216,48 +202,6 @@ func (h *handlerTransaction) Notification(w http.ResponseWriter, r *http.Request
 
 	w.WriteHeader(http.StatusOK)
 }
-
-// func (h *handlerTransaction) UpdateTransaction(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
-
-// 	request := new(Transactionsdto.UpdateTransactionRequest)
-// 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
-// 		json.NewEncoder(w).Encode(response)
-// 		return
-// 	}
-
-// 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
-// 	Transaction, err := h.TransactionRepository.GetTransaction(int(id))
-
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusBadRequest)
-// 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
-// 		json.NewEncoder(w).Encode(response)
-// 		return
-// 	}
-
-// 	if request.DonateAmount != "" {
-// 		Transaction.DonateAmount = request.DonateAmount
-// 	}
-
-// 	if request.Status != "" {
-// 		Transaction.Status = request.Status
-// 	}
-
-// 	data, err := h.TransactionRepository.UpdateTransaction(Transaction)
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusInternalServerError)
-// 		response := dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()}
-// 		json.NewEncoder(w).Encode(response)
-// 		return
-// 	}
-
-// 	w.WriteHeader(http.StatusOK)
-// 	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponseTransaction(data)}
-// 	json.NewEncoder(w).Encode(response)
-// }
 
 func SendMail(status string, transaction models.Transaction) {
 
